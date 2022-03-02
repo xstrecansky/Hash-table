@@ -1,2 +1,2 @@
 # hashTable
-Základy hašovacej tabuľky bez optimalizácie
+Implementácia hašovacej tabuľky a hašovacej tabuľky s riešením kolízií pomocou spájaného zoznamu 
