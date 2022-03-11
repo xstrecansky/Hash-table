@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 
 #define SIZE 1000
 //Reprezentuje jeden prvok v hashovacej tabulke
@@ -99,6 +100,50 @@ void freeHash(hTable *hashTable){
 }
 int main(){
     //Vytvorime hashovaciu tabulku
+    printf("Ak chces testovat O(n) stlac 1\n");
+    int test;
+    scanf("%d",&test);
+    if(test == 1){
+        clock_t start;
+        double time;
+        struct node* root;
+        printf("Casova zlozitost HT SZ:\n\n");
+        printf("Pocet Prvkov\t\t|Insert\t\t|Search\t\t|Delete\n");
+        for(int i=1;i<=10;i++){
+            hTable *hashTable = malloc(sizeof(hashTable));
+            hashTable->entries = malloc(sizeof(entryNode*)*SIZE);
+            for(int k=0;k<SIZE;k++){
+                hashTable->entries[k]=NULL;
+            }
+            printf("------------------------+---------------+---------------+--------\n");
+            printf("%d\t\t\t", (1000*i));
+            start=clock();
+            //Testujeme insert
+            for(int j=0;j<(1000*i);j++){
+                insert(hashTable, random()%(1000*i));
+            }
+            time=(clock()-start)/(double)CLOCKS_PER_SEC;
+            printf("|%f\t",time);
+            //Testujeme search
+            start=clock();
+            for(int j=0;j<(1000*i);j++){
+                search(hashTable, random()%(1000*i));
+            }
+            time=(clock()-start)/(double)CLOCKS_PER_SEC;
+            printf("|%f\t",time);
+            //Testujeme delete
+            start=clock();
+            for(int j=0;j<(1000*i);j++){
+                delete(hashTable, random()%(1000*i));
+            }
+            time=(clock()-start)/(double)CLOCKS_PER_SEC;
+            printf("|%f\n",time);
+            //Uvolnime pamat
+            //freeHash(hashTable);
+        }
+        printf("-----------------------------------------------------------------\n");
+        return 0;
+    }
     hTable *hashTable = malloc(sizeof(hashTable));
     hashTable->entries = malloc(sizeof(entryNode*)*SIZE);
     for(int i=0;i<SIZE;i++)
