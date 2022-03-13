@@ -1,9 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
-//Funkcia na vratenie hodnoty
-int returnKey(int data, int size){
-    return data%(size);
-}
+#include<time.h>
+
 void initHashTable(int size, int *hashTable){
     for(int i=0;i<size;i++){
         (hashTable)[i]=0;
@@ -61,14 +59,58 @@ void delete(int size, int *hashTable, int data, int key){
     return;
 }
 int main(){
-    int i=0,j=0;
-    int initValue, inputValue;
+    printf("Ak chces testovat O(n) stlac 1\n");
+    int test;
+    scanf("%d",&test);
+    if(test == 1){
+        clock_t start;
+        double time;
+        int value;
+        printf("Casova zlozitost HT SZ:\n\n");
+        printf("Pocet Prvkov\t\t|Insert\t\t|Search\t\t|Delete\n");
+        for(int i=1;i<=10;i++){
+            int size=1000*i+1;
+            int hashTable[size];
+            initHashTable(size, (hashTable));
+            printf("------------------------+---------------+---------------+--------\n");
+            printf("%d\t\t\t", (1000*i));
+            start=clock();
+            //Testujeme insert
+            for(int j=0;j<(1000*i);j++){
+                value = random()%(1000*i);
+                insert(size, hashTable, value, value%size);
+            }
+            //printf("cauko\n");
+            time=(clock()-start)/(double)CLOCKS_PER_SEC;
+            printf("|%f\t",time);
+            //Testujeme search
+
+            start=clock();
+            for(int j=0;j<(1000*i);j++){
+                value = random()%(1000*i);
+                search(size, hashTable, value, value%size);
+            }
+            time=(clock()-start)/(double)CLOCKS_PER_SEC;
+            printf("|%f\t",time);
+            //Testujeme delete
+            start=clock();
+            for(int j=0;j<(1000*i);j++){
+                value = random()%(1000*i);
+                delete(size, hashTable, value, value%size);
+            }
+            time=(clock()-start)/(double)CLOCKS_PER_SEC;
+            printf("|%f\n",time);
+        }
+        printf("-----------------------------------------------------------------\n");
+        return 0;
+    }
+    int i=0,j=0, initValue, inputValue;
     printf("Vloz hodnotu do hasovacej tabulky\n");
     scanf("%d",&initValue);
-    int size=100;
+    int size=1000+1;
     int hashTable[size];
     initHashTable(size, (hashTable));
-    insert(size, hashTable, initValue, returnKey(initValue, size));
+    insert(size, hashTable, initValue, initValue%size);
     while(i==0){
         printf("Vloz dalsiu hodnotu do hasovacej tabulky\nAk vlozis %d, program skonci\n",initValue);
         scanf("%d",&inputValue);
@@ -82,11 +124,11 @@ int main(){
                         break;
                     case 2:
                         scanf("%d",&inputValue);
-                        delete(size, hashTable, inputValue, returnKey(inputValue, size));
+                        delete(size, hashTable, inputValue, inputValue%size);
                         break;
                     case 3:
                         scanf("%d",&inputValue);
-                        if(search(size, hashTable, inputValue, returnKey(inputValue, size)))
+                        if(search(size, hashTable, inputValue, inputValue%size))
                             printf("Hodnota %d sa nachadza v tabulke\n", inputValue);
                         else
                             printf("Hodnota %d sa nenachadza v tabulke\n", inputValue);
@@ -100,7 +142,7 @@ int main(){
                         break;
                 }
             }
-        insert(size,hashTable,inputValue, returnKey(inputValue, size));
+        insert(size,hashTable,inputValue, inputValue);
     }
     return 0;
 }
