@@ -100,50 +100,6 @@ void freeHash(hTable *hashTable){
 }
 int main(){
     //Vytvorime hashovaciu tabulku
-    printf("Ak chces testovat O(n) stlac 1\n");
-    int test;
-    scanf("%d",&test);
-    if(test == 1){
-        clock_t start;
-        double time;
-        struct node* root;
-        printf("Casova zlozitost HT SZ:\n\n");
-        printf("Pocet Prvkov\t\t|Insert\t\t|Search\t\t|Delete\n");
-        for(int i=1;i<=10;i++){
-            hTable *hashTable = malloc(sizeof(hashTable));
-            hashTable->entries = malloc(sizeof(entryNode*)*SIZE);
-            for(int k=0;k<SIZE;k++){
-                hashTable->entries[k]=NULL;
-            }
-            printf("------------------------+---------------+---------------+--------\n");
-            printf("%d\t\t\t", (1000*i));
-            start=clock();
-            //Testujeme insert
-            for(int j=0;j<(1000*i);j++){
-                insert(hashTable, random()%(1000*i));
-            }
-            time=(clock()-start)/(double)CLOCKS_PER_SEC;
-            printf("|%f\t",time);
-            //Testujeme search
-            start=clock();
-            for(int j=0;j<(1000*i);j++){
-                search(hashTable, random()%(1000*i));
-            }
-            time=(clock()-start)/(double)CLOCKS_PER_SEC;
-            printf("|%f\t",time);
-            //Testujeme delete
-            start=clock();
-            for(int j=0;j<(1000*i);j++){
-                delete(hashTable, random()%(1000*i));
-            }
-            time=(clock()-start)/(double)CLOCKS_PER_SEC;
-            printf("|%f\n",time);
-            //Uvolnime pamat
-            //freeHash(hashTable);
-        }
-        printf("-----------------------------------------------------------------\n");
-        return 0;
-    }
     hTable *hashTable = malloc(sizeof(hashTable));
     hashTable->entries = malloc(sizeof(entryNode*)*SIZE);
     for(int i=0;i<SIZE;i++)
@@ -151,6 +107,7 @@ int main(){
     int initValue, inputValue, i=0, j=0;
     printf("Vloz hodnotu do hasovacej tabulky\n");
     scanf("%d",&initValue);
+    insert(hashTable, initValue);
     while(i==0){
         printf("Vloz dalsiu hodnotu do hasovacej tabulky\nAk vlozis %d, vkladanie skonci\n",initValue);
         scanf("%d",&inputValue);
