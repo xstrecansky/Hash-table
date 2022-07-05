@@ -1,2 +1,2 @@
 # hashTable
-Implementácia hašovacej tabuľky a hašovacej tabuľky s riešením kolízií pomocou spájaného zoznamu 
+Implementácia hašovacej tabuľky s riešením kolízií otvoreného adresovania a hašovacej tabuľky s riešením kolízií pomocou spájaného zoznamu 
